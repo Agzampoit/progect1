@@ -10,7 +10,7 @@ xl<-(iris[,3:5])
 OY<-c(seq(from=0.0, to=3.0, by=0.1))
 OX<-c(seq(from=0.0, to=7.0, by=0.1))
 
-sortObjectsByDist <- function(xl, point, metricFunction = euclideanDistance)
+sortObjectsByDist <- function(xl, point, metricFunction = euclideanDistance)имиьтт
 
 {
      l <- dim(xl)[1]    
