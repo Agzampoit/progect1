@@ -1,14 +1,13 @@
-
-sortObjectsByDist <- function(xl, z, metricFunction =
-euclideanDistance)
+## Сортируем объекты согласно расстояния до объекта z
+sortObjectsByDist <- function(xl, z, metricFunction = euclideanDistance) #задаем функцию расстояния
 {
 l <- dim(xl)[1]
 n <- dim(xl)[2] - 1
 
-distances <- matrix(NA, l, 2)
+distances <- matrix(NA, l, 2)# задаем матрицу расстояния
 for (i in 1:l)
 {
-distances[i, ] <- c(i, metricFunction(xl[i, 1:n], z))
+distances[i, ] <- c(i, metricFunction(xl[i, 1:n], z)) # считаем расстояние от классифицируемой точки до остальных точек выборки
 }
 
 orderedXl <- xl[order(distances[, 2]), ]
