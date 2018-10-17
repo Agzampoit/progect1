@@ -22,8 +22,7 @@
 ![](https://latex.codecogs.com/gif.latex?%5Cinline%20a%28u%2C%20X%5E%7Bl%7D%2C%20k%29%3D%20%5Carg%20%5Cmax%20%5Csum_%7Bi%3D1%7D%5E%7Bk%7D%5By_%7Bu%7D%5E%7B%28i%29%7D%3D%20y%5D),  
 
 ***Реализация алгоритма: kNN***
-
-(вставить скрины)
+![knn](https://user-images.githubusercontent.com/43229815/47093219-6dabb480-d231-11e8-8466-98db0a7b09fd.jpg)
 
 ### Преимущества:
 
