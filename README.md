@@ -80,3 +80,6 @@ for(i in OX){
 	points(point[1], point[2], pch = 21, col = colors[class], asp = 1) } # классификация заданного объекта
 }
 ```
+Реализация алгоритма:
+--------------------------------
+![alt text](https://raw.githubusercontent.com/username/progect1/branch/path/to/1NN.jpg)
