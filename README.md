@@ -82,4 +82,4 @@ for(i in OX){
 ```
 Реализация алгоритма:
 --------------------------------
-![alt text](https://raw.githubusercontent.com/username/progect1/branch/path/to/1NN.jpg)
+![](https://raw.githubusercontent.com/sefayehalilova/progect1/branch/path/to/1NN.jpg)
