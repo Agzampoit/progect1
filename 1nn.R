@@ -1,5 +1,6 @@
 colors <- c("setosa" = "red", "versicolor" = "green3", "virginica" = "blue") 
-plot(iris[, 3:4], pch = 21, bg = colors[iris$Species], col = colors[iris$Species], asp = 1 ) ##рисуем выборку по признакам
+plot(iris[, 3:4], pch = 21, bg = colors[iris$Species], col = colors[iris$Species], asp = 1,
+     main = "Задача классификации 1NN", xlab = "длина листа", ylab = "ширина листа" ) ##рисуем выборку по признакам
 
 euclideanDistance <- function(u, v) ##функция расстояний, эвклидово расстояние
 {     
