@@ -100,21 +100,20 @@ for(t in 1:l) {
 ```    
 Сама функция выглядит так:  
   ```diff
-distances <- matrix(NA, l, 2) # расстояния от классифицируемого объекта u до каждого i-го соседа 
-   for(i in 1:l) {
-      distances[i, ] <- c(i, eDist(xl[i, 1:n], u))
-   }
-orderedxl <- xl[order(distances[ , 2]), ] # сортировка расстояний
+distances <- matrix(NA, l, 2)# расстояния от классифицируемого объекта u до каждого i-го соседа 
+    for(p in 1:l) {
+      distances[p, ] <- c(p, euclideanDistance(xl[p, 1:n], z))
+    }
+    orderedxl <- xl[order(distances[ , 2]), ]# сортировка расстояний
+    weights <- c(NA)# подсчёт весов для каждого i-го объекта
+    for(t in 1:l) {
+       weights[t] <- q^t #весовая функция
+    }
+    orderedxl_weighted <- cbind(orderedxl, weights)# объединение массивов расстояний и весов в матрицу
+    classes <- orderedxl_weighted[1:k, (n + 1):(n + 2)] # названия первых k ближайших соседей и их веса
+```    
+Результат работы алгоритма:  
 
-q <- 0.5 # для начала 0,5
-weights <- c(NA) # подсчёт весов для каждого i-го объекта
-for(i in 1:l) {
-   weights[i] <- q^i #весовая функция
-}
-
-orderedxl_weighted <- cbind(orderedxl, weights) # объединение массивов расстояний и весов в матрицу
-classes <- orderedxl_weighted[1:k, (n + 1):(n + 2)] # названия первых k ближайших соседей и их веса
-```  
 
 
 
