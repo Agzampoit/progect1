@@ -2,7 +2,7 @@ colors <- c("setosa" = "red", "versicolor" = "green3", "virginica" = "blue")
 plot(iris[, 3:4], pch = 21, bg = colors[iris$Species], col = colors[iris$Species], asp = 1,
      main = "Задача классификации 1NN", xlab = "длина листа", ylab = "ширина листа" ) ##рисуем выборку по признакам
 
-euclideanDistance <- function(u, v) ##функция расстояний, эвклидово расстояние
+euclideanDistance <- function(u, v) ##функция расстояний, эвклидово расстояние между функциями
 {     
 	sqrt(sum((u - v)^2)) 
 }
@@ -11,12 +11,12 @@ xl<-(iris[,3:5]) ## выборка
 OY<-c(seq(from=0.0, to=3.0, by=0.1))## расстояние расположения точек по OY, от 0 до 3 с шагом 0,1
 OX<-c(seq(from=0.0, to=7.0, by=0.1))## расстояние расположения точек по OX, от 0 до 7 с шагом 0,1
 
-sortObjectsByDist <- function(xl, point, metricFunction = euclideanDistance)## сортировка объектов согласно растояния до объекта point
+sortObjectsByDist <- function(xl, point, metricFunction = euclideanDistance)## сортировка объектов по возрастанию согласно растояния до объекта point
 
 {
-     l <- dim(xl)[1]    
+     l <- dim(xl)[1]  #длина выборки  
 	 n <- dim(xl)[2] - 1 
-	 distances <- matrix(NA, l, 2)## создаем матрицу расстояний 
+	 distances <- matrix(NA, l, 2)## создаем матрицу расстояний для хранения весов(расстояний) относительно классифицируемого объекта
 	      for (i in 1:l)  
 		  {         
 			distances[i, ] <- c(i, metricFunction(xl[i, 1:n], point))## расстояние от каждой точки до точки point, классифицируемой
