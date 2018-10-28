@@ -3,6 +3,12 @@ colors <- c("setosa" = "red", "versicolor" = "green3", "virginica" = "blue")
 plot(iris[, 3:4], pch = 21, bg = colors[iris$Species], col = colors[iris$Species], asp = 1, 
      main = "Задача классификации kNN", xlab = "Длина листа", ylab = "Ширина листа")
 
+## Евклидово расстояние
+euclideanDistance <- function(u, v)
+{
+sqrt(sum((u - v)^2))
+}
+
 ## Сортируем объекты согласно расстояния до объекта z
 sortObjectsByDist <- function(xl, z, metricFunction = euclideanDistance) ## задаем функцию расстояния
 {
