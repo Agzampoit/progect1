@@ -44,7 +44,7 @@ kNN <- function(xl, z, k)
 
 Ниже представлен итог работы алгоритма при *k=6*.  
 ![knn](https://user-images.githubusercontent.com/43229815/47304893-94eaf300-d630-11e8-877f-7b6791c5117d.png)  
-[kNN](#kNN)
+[kNN](#kNN.R)
 
 **Скользящий контроль(leave-one-out) для knn**  
    
