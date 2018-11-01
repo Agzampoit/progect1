@@ -109,7 +109,8 @@ for(i in OX){
 }
 ```
 Ниже представлена картинка работы данного алгоритма:
-![1nn](https://user-images.githubusercontent.com/43229815/47304637-db8c1d80-d62f-11e8-9480-201f1898a68f.png) 
+![1nn](https://user-images.githubusercontent.com/43229815/47304637-db8c1d80-d62f-11e8-9480-201f1898a68f.png)  
+
 [1NN](https://github.com/sefayehalilova/progect1/blob/master/1nn.R)  
 
 Алгоритм k взвешенных ближайших соседей (kwNN)
