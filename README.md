@@ -78,7 +78,7 @@ for(k in Ox) {
 ```
 
 *График зависимости LOO от k=6*:  
-![loo](https://user-images.githubusercontent.com/43229815/47098458-efa0db00-d23b-11e8-94ab-1135d9d4020e.png)  
+![loo](https://user-images.githubusercontent.com/43229815/48148795-adfbd100-e2cb-11e8-9c79-b74f736a31bd.png)  
 
 k оптимальное (k_opt) достигается при минимальном LOO (k оптимальное, если оно равно 6).  
 
