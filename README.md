@@ -138,6 +138,12 @@ distances <- matrix(NA, l, 2)# расстояния от классифицир�
     }
     orderedxl_weighted <- cbind(orderedxl, weights)
     classes <- orderedxl_weighted[1:k, (n + 1):(n + 2)] # названия первых k ближайших соседей и их веса
+    sumSetosa <- sum(classes[classes$Species == "setosa", 2])
+    sumVersicolor <- sum(classes[classes$Species == "versicolor", 2])
+    sumVirginica <- sum(classes[classes$Species == "virginica", 2])
+    answer <- matrix(c(sumSetosa, sumVersicolor, sumVirginica), 
+                  nrow = 1, ncol = 3, byrow = TRUE, list(c(1), c('setosa', 'versicolor', 'virginica')))#матрица имен классов и их сумм весов, которая заполняется по строкам
+points(z[1], z[2], pch = 21, col = colors[which.max(answer)], asp=1) #закрашиваем точки в тот цвет класса, чей вес максимальный
 ```    
 Результат работы алгоритма:  
 ![kwnn](https://user-images.githubusercontent.com/43229815/47620572-8e5eee80-dafc-11e8-8e00-313ec2ecddd3.png)
