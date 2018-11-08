@@ -77,10 +77,10 @@ for(k in Ox) {
 
 ```
 
-*График зависимости LOO от k=6*:  
+*График зависимости LOO от k*:  
 ![loo](https://user-images.githubusercontent.com/43229815/48148795-adfbd100-e2cb-11e8-9c79-b74f736a31bd.png)  
 
-k оптимальное (k_opt) достигается при минимальном LOO (k оптимальное, если оно равно 6).  
+k оптимальное (k_opt) достигается при минимальном LOO (оптимальное k равно 6).  
 
 Алгоритм 1NN
 -----------------------------------
@@ -108,7 +108,7 @@ for(i in OX){
 	points(point[1], point[2], pch = 21, col = colors[class], asp = 1) } # классификация заданного объекта
 }
 ```
-Ниже представлена картинка работы данного алгоритма:
+Ниже представлен итог работы данного алгоритма:
 ![1nn](https://user-images.githubusercontent.com/43229815/47304637-db8c1d80-d62f-11e8-9480-201f1898a68f.png)  
 
 [1NN](https://github.com/sefayehalilova/progect1/blob/master/1nn.R)  
