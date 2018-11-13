@@ -1,7 +1,7 @@
 ##Рисуем выборку
 colors <- c("setosa" = "red", "versicolor" = "green3", "virginica" = "blue")
 plot(iris[, 3:4], pch = 21, bg = colors[iris$Species], col = colors[iris$Species], asp = 1, 
-     main = "Задача классификации kNN", xlab = "Длина листа", ylab = "Ширина листа")
+     main = "Алгоритм классификации. kNN.", xlab = "Длина листа", ylab = "Ширина листа")
 
 ## Евклидово расстояние
 euclideanDistance <- function(u, v)
@@ -43,3 +43,5 @@ z <- c(2.7, 1)
 xl <- iris[, 3:5]
 class <- kNN(xl, z, k=6)
 points(z[1], z[2], pch = 22, bg = colors[class], asp = 1)
+
+legend("bottomright", c("virginica", "versicolor", "setosa"), pch = c(10,10,10), col = c("blue", "green3", "red"))

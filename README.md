@@ -43,7 +43,7 @@ kNN <- function(xl, z, k)
  В конце задаем точку *z*, которую нужно классфицировать(ее координаты, выборку и тд).  
 
 Ниже представлен итог работы алгоритма при *k=6*.  
-![knn](https://user-images.githubusercontent.com/43229815/47304893-94eaf300-d630-11e8-877f-7b6791c5117d.png)  
+![knn](https://user-images.githubusercontent.com/43229815/48431971-23601980-e784-11e8-9b3a-f1736d24173b.png)   
 [kNN](https://github.com/sefayehalilova/progect1/blob/master/knn.R)
 
 **Скользящий контроль(leave-one-out) для knn**  
@@ -56,12 +56,12 @@ LeaveOneOut (или LOO) - простая перекрестная провер�
 ```diff
 
 for(k in Ox) {
-  R <- 0 #заводим переменную с начальным значением 0, в которую будут накапливаться ошибки
+  R <- 0 
   for(i in 1:l) {
-    iris_new <- iris[-i, ] # наша выборка без i-го элемента
+    iris_new <- iris[-i, ] 
     z <- iris[i, 3:4]
-    if(knn(iris_new, z, k) != iris[i, 5]) { #если алгоритм ошибся
-      R <- R + 1 #тогда ошибка увеличивается
+    if(knn(iris_new, z, k) != iris[i, 5]) { 
+      R <- R + 1 
     } 
   }
 #после того как мы перебрали все элементы, считаем loo
@@ -77,10 +77,10 @@ for(k in Ox) {
 
 ```
 
-*График зависимости LOO от k=6*:  
+*График зависимости LOO от k*:  
 ![loo](https://user-images.githubusercontent.com/43229815/48148795-adfbd100-e2cb-11e8-9c79-b74f736a31bd.png)  
 
-k оптимальное (k_opt) достигается при минимальном LOO (k оптимальное, если оно равно 6).  
+k оптимальное (k_opt) достигается при минимальном LOO (оптимальное k равно 6).  
 
 Алгоритм 1NN
 -----------------------------------
@@ -95,21 +95,21 @@ k оптимальное (k_opt) достигается при минималь�
 ```diff
 # применяем метод 1NN
 NN1 <- function(xl, point) {	  
-	 orderedXl <- sortObjectsByDist(xl, point) # сортировка выборки согласно классифицируемого объекта    
-	 n <- dim(orderedXl)[2] - 1 
-	 class <- orderedXl[1, n + 1] # получение класса соседа
-	 return (class) # возвращаем класс
+	  orderedXl <- sortObjectsByDist(xl, point) # сортировка выборки согласно классифицируемого объекта    
+	  n <- dim(orderedXl)[2] - 1 
+	  class <- orderedXl[1, n + 1] # получение класса соседа
+	  return (class) # возвращаем класс
 }
 
 for(i in OX){
 	for(j in OY){
-	point<-c(i,j)
-	class <- NN1(xl, point) 
-	points(point[1], point[2], pch = 21, col = colors[class], asp = 1) } # классификация заданного объекта
+	  point<-c(i,j)
+	  class <- NN1(xl, point) 
+	  points(point[1], point[2], pch = 21, col = colors[class], asp = 1) } # классификация заданного объекта
 }
 ```
-Ниже представлена картинка работы данного алгоритма:
-![1nn](https://user-images.githubusercontent.com/43229815/47304637-db8c1d80-d62f-11e8-9480-201f1898a68f.png)  
+Ниже представлен итог работы данного алгоритма:
+![1nn](https://user-images.githubusercontent.com/43229815/48433796-1691f480-e789-11e8-8c17-54f60a593be9.png)   
 
 [1NN](https://github.com/sefayehalilova/progect1/blob/master/1nn.R)  
 
@@ -131,15 +131,22 @@ distances <- matrix(NA, l, 2)# расстояния от классифицир�
       distances[p, ] <- c(p, euclideanDistance(xl[p, 1:n], z))
     }
     orderedxl <- xl[order(distances[ , 2]), ]# сортировка расстояний
+    
     weights <- c(NA)# подсчёт весов для каждого i-го объекта
     for(i in 1:l) {
-       weights[i] <- q^i #весовая функция
-    }3
-    orderedxl_weighted <- cbind(orderedxl, weights)# объединение массивов расстояний и весов в матрицу
+       weights[i] <- q^i 
+    }
+    orderedxl_weighted <- cbind(orderedxl, weights)
     classes <- orderedxl_weighted[1:k, (n + 1):(n + 2)] # названия первых k ближайших соседей и их веса
+    sumSetosa <- sum(classes[classes$Species == "setosa", 2])
+    sumVersicolor <- sum(classes[classes$Species == "versicolor", 2])
+    sumVirginica <- sum(classes[classes$Species == "virginica", 2])
+    answer <- matrix(c(sumSetosa, sumVersicolor, sumVirginica), 
+                  nrow = 1, ncol = 3, byrow = TRUE, list(c(1), c('setosa', 'versicolor', 'virginica')))#матрица имен классов и их сумм весов, которая заполняется по строкам
+points(z[1], z[2], pch = 21, col = colors[which.max(answer)], asp=1) #закрашиваем точки в тот цвет класса, чей вес максимальный
 ```    
 Результат работы алгоритма:  
-![kwnn](https://user-images.githubusercontent.com/43229815/47620572-8e5eee80-dafc-11e8-8e00-313ec2ecddd3.png)
+![kwnn](https://user-images.githubusercontent.com/43229815/48442083-3253c580-e79e-11e8-879e-847b926014df.png)
 
 
 
