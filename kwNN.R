@@ -1,41 +1,42 @@
 colors <- c("setosa" = "red", "versicolor" = "green3", "virginica" = "blue")
 plot(iris[, 3:4], pch = 21, bg = colors[iris$Species], col = colors[iris$Species], asp = 1,
-     main = "Çàäà÷à êëàññèôèêàöèè kwNN", xlab = "äëèíà ëèñòà", ylab = "øèðèíà ëèñòà" )
+     main = "ÐÐ»Ð³Ð¾Ñ€Ð¸Ñ‚Ð¼ ÐºÐ»Ð°ÑÑÐ¸Ñ„Ð¸ÐºÐ°Ñ†Ð¸Ð¸. kwNN.", xlab = "Ð´Ð»Ð¸Ð½Ð° Ð»Ð¸ÑÑ‚Ð°", ylab = "ÑˆÐ¸Ñ€Ð¸Ð½Ð° Ð»Ð¸ÑÑ‚Ð°" )
 
 euclideanDistance <- function(u, v) {
   sqrt(sum((u - v)^2))
 }
 
 k <- 6
-q <- 0.5 # äëÿ íà÷àëà
+q <- 0.5 # Ð´Ð»Ñ Ð½Ð°Ñ‡Ð°Ð»Ð°
 
 xl <- iris[, 3:5]
 l <- dim(xl)[1] 
 n <- dim(xl)[2] - 1
 
-OY<-seq(from=0.0, to=3.0, by=0.1)## ðàññòîÿíèå ðàñïîëîæåíèÿ òî÷åê ïî OY, îò 0 äî 3 ñ øàãîì 0,1
-OX<-seq(from=0.0, to=7.0, by=0.1)## ðàññòîÿíèå ðàñïîëîæåíèÿ òî÷åê ïî OX, îò 0 äî 7 ñ øàãîì 0,1
+OY<-seq(from=0.0, to=3.0, by=0.1)## Ñ€Ð°ÑÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ñ€Ð°ÑÐ¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ Ñ‚Ð¾Ñ‡ÐµÐº Ð¿Ð¾ OY, Ð¾Ñ‚ 0 Ð´Ð¾ 3 Ñ ÑˆÐ°Ð³Ð¾Ð¼ 0,1
+OX<-seq(from=0.0, to=7.0, by=0.1)## Ñ€Ð°ÑÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ñ€Ð°ÑÐ¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ Ñ‚Ð¾Ñ‡ÐµÐº Ð¿Ð¾ OX, Ð¾Ñ‚ 0 Ð´Ð¾ 7 Ñ ÑˆÐ°Ð³Ð¾Ð¼ 0,1
 
 for(i in OX) {
   for(j in OY) {
     z <- c(i, j)
-    distances <- matrix(NA, l, 2)# ðàññòîÿíèÿ îò êëàññèôèöèðóåìîãî îáúåêòà u äî êàæäîãî i-ãî ñîñåäà 
+    distances <- matrix(NA, l, 2)# Ñ€Ð°ÑÑÑ‚Ð¾ÑÐ½Ð¸Ñ Ð¾Ñ‚ ÐºÐ»Ð°ÑÑÐ¸Ñ„Ð¸Ñ†Ð¸Ñ€ÑƒÐµÐ¼Ð¾Ð³Ð¾ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° u Ð´Ð¾ ÐºÐ°Ð¶Ð´Ð¾Ð³Ð¾ i-Ð³Ð¾ ÑÐ¾ÑÐµÐ´Ð° 
     for(p in 1:l) {
       distances[p, ] <- c(p, euclideanDistance(xl[p, 1:n], z))
     }
-    orderedxl <- xl[order(distances[ , 2]), ]# ñîðòèðîâêà ðàññòîÿíèé
-    weights <- c(NA)# ïîäñ÷¸ò âåñîâ äëÿ êàæäîãî i-ãî îáúåêòà
+    orderedxl <- xl[order(distances[ , 2]), ]# ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²ÐºÐ° Ñ€Ð°ÑÑÑ‚Ð¾ÑÐ½Ð¸Ð¹
+    weights <- c(NA)# Ð¿Ð¾Ð´ÑÑ‡Ñ‘Ñ‚ Ð²ÐµÑÐ¾Ð² Ð´Ð»Ñ ÐºÐ°Ð¶Ð´Ð¾Ð³Ð¾ i-Ð³Ð¾ Ð¾Ð±ÑŠÐµÐºÑ‚Ð°
     for(t in 1:l) {
-       weights[t] <- q^t #âåñîâàÿ ôóíêöèÿ
+       weights[t] <- q^t #Ð²ÐµÑÐ¾Ð²Ð°Ñ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ
     }
-    orderedxl_weighted <- cbind(orderedxl, weights)# ñîçäàåì ìàòðèöó, êîòîðàÿ ñ ïîìîùüþ cbind îáúåäèíÿåò ìàññèâû ðàññòîÿíèé è âåñîâ 
-    classes <- orderedxl_weighted[1:k, (n + 1):(n + 2)] # ïîëó÷àåì êëàññû ñ èìåíàìè ïåðâûõ k áëèæàéøèõ ñîñåäåé è èõ âåñà
+    orderedxl_weighted <- cbind(orderedxl, weights)# ÑÐ¾Ð·Ð´Ð°ÐµÐ¼ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ñƒ, ÐºÐ¾Ñ‚Ð¾Ñ€Ð°Ñ Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰ÑŒÑŽ cbind Ð¾Ð±ÑŠÐµÐ´Ð¸Ð½ÑÐµÑ‚ Ð¼Ð°ÑÑÐ¸Ð²Ñ‹ Ñ€Ð°ÑÑÑ‚Ð¾ÑÐ½Ð¸Ð¹ Ð¸ Ð²ÐµÑÐ¾Ð² 
+    classes <- orderedxl_weighted[1:k, (n + 1):(n + 2)] # Ð¿Ð¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ ÐºÐ»Ð°ÑÑÑ‹ Ñ Ð¸Ð¼ÐµÐ½Ð°Ð¼Ð¸ Ð¿ÐµÑ€Ð²Ñ‹Ñ… k Ð±Ð»Ð¸Ð¶Ð°Ð¹ÑˆÐ¸Ñ… ÑÐ¾ÑÐµÐ´ÐµÐ¹ Ð¸ Ð¸Ñ… Ð²ÐµÑÐ°
     sumSetosa <- sum(classes[classes$Species == "setosa", 2])
     sumVersicolor <- sum(classes[classes$Species == "versicolor", 2])
     sumVirginica <- sum(classes[classes$Species == "virginica", 2])
     answer <- matrix(c(sumSetosa, sumVersicolor, sumVirginica), 
-                  nrow = 1, ncol = 3, byrow = TRUE, list(c(1), c('setosa', 'versicolor', 'virginica')))#ìàòðèöà èìåí êëàññîâ è èõ ñóìì âåñîâ, êîòîðàÿ çàïîëíÿåòñÿ ïî ñòðîêàì
-    points(z[1], z[2],  pch = 21, col = colors[which.max(answer)], asp=1) #çàêðàøèâàåì òî÷êè â òîò öâåò êëàññà, ÷åé âåñ ìàêñèìàëüíûé
+                  nrow = 1, ncol = 3, byrow = TRUE, list(c(1), c('setosa', 'versicolor', 'virginica')))#Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ð° Ð¸Ð¼ÐµÐ½ ÐºÐ»Ð°ÑÑÐ¾Ð² Ð¸ Ð¸Ñ… ÑÑƒÐ¼Ð¼ Ð²ÐµÑÐ¾Ð², ÐºÐ¾Ñ‚Ð¾Ñ€Ð°Ñ Ð·Ð°Ð¿Ð¾Ð»Ð½ÑÐµÑ‚ÑÑ Ð¿Ð¾ ÑÑ‚Ñ€Ð¾ÐºÐ°Ð¼
+    points(z[1], z[2],  pch = 21, col = colors[which.max(answer)], asp=1) #Ð·Ð°ÐºÑ€Ð°ÑˆÐ¸Ð²Ð°ÐµÐ¼ Ñ‚Ð¾Ñ‡ÐºÐ¸ Ð² Ñ‚Ð¾Ñ‚ Ñ†Ð²ÐµÑ‚ ÐºÐ»Ð°ÑÑÐ°, Ñ‡ÐµÐ¹ Ð²ÐµÑ Ð¼Ð°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ñ‹Ð¹
   }
 }
 
+legend("bottomright", c("k=6", "q=0.5"))
