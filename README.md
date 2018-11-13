@@ -43,7 +43,7 @@ kNN <- function(xl, z, k)
  В конце задаем точку *z*, которую нужно классфицировать(ее координаты, выборку и тд).  
 
 Ниже представлен итог работы алгоритма при *k=6*.  
-![knn](https://user-images.githubusercontent.com/43229815/48431971-23601980-e784-11e8-9b3a-f1736d24173b.png) 
+![knn](https://user-images.githubusercontent.com/43229815/48431971-23601980-e784-11e8-9b3a-f1736d24173b.png)   
 [kNN](https://github.com/sefayehalilova/progect1/blob/master/knn.R)
 
 **Скользящий контроль(leave-one-out) для knn**  
