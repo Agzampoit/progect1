@@ -1,6 +1,6 @@
 colors <- c("setosa" = "red", "versicolor" = "green3", "virginica" = "blue") 
 plot(iris[, 3:4], pch = 21, bg = colors[iris$Species], col = colors[iris$Species], asp = 1,
-     main = "Задача классификации 1NN", xlab = "длина листа", ylab = "ширина листа" ) ##рисуем выборку по признакам
+     main = Алгоритм классификации. 1NN.", xlab = "длина листа", ylab = "ширина листа" ) ##рисуем выборку по признакам
 
 euclideanDistance <- function(u, v) ##функция расстояний, эвклидово расстояние между функциями
 {     
@@ -37,3 +37,6 @@ for(i in OX){
 	class <- NN1(xl, point) 
 	points(point[1], point[2], pch = 21, col = colors[class], asp = 1) }## классификация заданного объекта
 }
+
+
+legend("bottomright", c("virginica", "versicolor", "setosa"), pch = c(10,10,10), col = c("blue", "green3", "red"))
