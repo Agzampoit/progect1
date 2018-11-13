@@ -109,7 +109,7 @@ for(i in OX){
 }
 ```
 Ниже представлен итог работы данного алгоритма:
-![1nn](https://user-images.githubusercontent.com/43229815/47304637-db8c1d80-d62f-11e8-9480-201f1898a68f.png)  
+![1nn](https://user-images.githubusercontent.com/43229815/48433796-1691f480-e789-11e8-8c17-54f60a593be9.png)   
 
 [1NN](https://github.com/sefayehalilova/progect1/blob/master/1nn.R)  
 
