@@ -155,7 +155,10 @@ distances <- matrix(NA, l, 2)# расстояния от классифицир�
 points(z[1], z[2], pch = 21, col = colors[which.max(answer)], asp=1) #закрашиваем точки в тот цвет класса, чей вес максимальный
 ```    
 Результат работы алгоритма:  
-![kwnn](https://user-images.githubusercontent.com/43229815/48442083-3253c580-e79e-11e8-879e-847b926014df.png)
+![kwnn](https://user-images.githubusercontent.com/43229815/48442083-3253c580-e79e-11e8-879e-847b926014df.png)  
+*Ниже представлен график зависимости LOO от q*:  
+![wknnloo](https://user-images.githubusercontent.com/43229815/48499976-cd09de00-e84a-11e8-918d-baa683dad670.png)  
+
 
 
 
