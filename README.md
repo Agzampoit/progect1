@@ -10,11 +10,11 @@
 
 Ниже представлена таблица, в которой сравниваются разные алгоритмы классификации:  
 
-|  fs    |  d |  d|
-|   dsf  |  d |  4|
-| dsd    |  d |  4|
-|   rsr  |   d| e |
-| tdt    |   f| b |
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
 
 
 Алгоритм k ближайших соседей (kNN)
