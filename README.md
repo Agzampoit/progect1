@@ -157,6 +157,7 @@ points(z[1], z[2], pch = 21, col = colors[which.max(answer)], asp=1) #закра
 Результат работы алгоритма:  
 ![kwnn](https://user-images.githubusercontent.com/43229815/48442083-3253c580-e79e-11e8-879e-847b926014df.png)  
 *Ниже представлен график зависимости LOO от q*:  
+![wknnloo](https://user-images.githubusercontent.com/43229815/48499976-cd09de00-e84a-11e8-918d-baa683dad670.png)
 
 
 
