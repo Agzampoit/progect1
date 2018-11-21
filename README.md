@@ -187,6 +187,8 @@ points(z[1], z[2], pch = 21, col = colors[which.max(answer)], asp=1) #закра
 
 
 
+
+
   
   
  
