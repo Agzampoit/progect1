@@ -212,6 +212,14 @@ mc.PW = function(distances, u, h) {
 }
 ```   
 Ниже представлены результаты работы алгоритма с разными ядрами, также посчитано LOO:  
+**1**.  
+![pw pryamoyg](https://user-images.githubusercontent.com/43229815/49181737-31f42680-f369-11e8-819f-c2457385d396.png)  
+**2**.  
+![pw treyg](https://user-images.githubusercontent.com/43229815/49181026-5949f400-f367-11e8-9ea7-a1e174a8edb1.png)  
+**3**.  
+
+
+
 
 
 
