@@ -1,65 +1,122 @@
-colors <- c("setosa" = "red", "versicolor" = "green3", "virginica" = "blue")
-plot(NULL, NULL, type = "l", xlim = c(min(iris[, 3]), max(iris[, 3])), ylim = c(min(iris[, 4]), max(iris[, 4])), main = "Ìåòîä Ïàðçåíîâñêîãî îêíà", xlab = 'Äëèíà ëèñòà', ylab = 'Øèðèíà ëèñòà')
+#Ð•Ð²ÐºÐ»Ð¸Ð´Ð¾Ð²Ð¾ Ñ€Ð°ÑÑÑ‚Ð¾ÑÐ½Ð¸Ðµ
+dist = function(p1, p2) sqrt(sum((p1 - p2) ^ 2)) 
+#Ð Ð°ÑÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ð¾Ñ‚ Ð²ÑÐµÑ… points Ð´Ð¾ Ñ‚Ð¾Ñ‡ÐºÐ¸ u
+distances = function(points, u) apply(points, 1, dist, u)
 
 
-euclideanDistance <- function(u, v)
-{
-  return (sqrt(sum((u - v)^2)))
+
+#Ð¯Ð´Ñ€Ð°
+kernel.pr = function(r){
+  return ((0.5 * (abs(r) <= 1) )) #Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð³Ð¾ ÑÐ´Ñ€Ð°
+}
+kernel.tr = function(r){
+  return ((1 - abs(r)) * (abs(r) <= 1)) #Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð´Ð»Ñ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð³Ð¾ ÑÐ´Ñ€Ð°
+}
+kernel.kv = function(r){
+  return ((15 / 16) * (1 - r ^ 2) ^ 2 * (abs(r) <= 1)) #Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð´Ð»Ñ ÐºÐ²Ð°Ñ€Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾ ÑÐ´Ñ€Ð°
+}
+kernel.ep = function(r){
+  return ((3/4*(1-r^2)*(abs(r)<=1))) #Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð´Ð»Ñ ÑÐ´Ñ€Ð° Ð•Ð¿Ð°Ð½ÐµÑ‡Ð½Ð¸ÐºÐ¾Ð²Ð°
+}
+kernel.ga = function(r){
+  (((2*pi)^(-1/2)) * exp(-1/2*r^2)) #Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð´Ð»Ñ Ð“Ð°ÑƒÑÑÐ¾Ð²ÑÐºÐ¾Ð³Ð¾ ÑÐ´Ñ€Ð°
 }
 
-core1 = function(z){
-  return ((0.5 * (abs(z) <= 1) )) #ôóíêöèÿ ïðÿìîóãîëüíîãî ÿäðà
-}
-core2 = function(z){
-  return ((1 - abs(z)) * (abs(z) <= 1)) #ôóíêöèÿ äëÿ òðåóãîëüíîãî ÿäðà
-}
-core3 = function(z){
-  return ((15 / 16) * (1 - z ^ 2) ^ 2 * (abs(z) <= 1)) #ôóíêöèÿ äëÿ êâàðòè÷åñêîãî ÿäðà
-}
-core4 = function(z){
-  return ((3/4*(1-z^2)*(abs(z)<=1))) #ôóíêöèÿ äëÿ ÿäðà Åïàíå÷íèêîâà
-}
-core5 = function(z){
-  (((2*pi)^(-1/2)) * exp(-1/2*z^2)) #ôóíêöèÿ äëÿ Ãàóññîâñêîãî ÿäðà
+
+PW.kernel = kernel.kv 
+
+#PW
+mc.PW = function(distances, u, h) {
+  weights = mc.PW.kernel(distances / h)
+  classes = unique(names(distances)) 
+  
+  weightsByClass = sapply(classes, mc.sumByClass, weights)
+  
+  if (max(weightsByClass) == 0) return("") 
+  
+  return(names(which.max(weightsByClass)))
 }
 
-h = 0.5 #äëÿ íà÷àëà
 
-xl <- iris[, 3:5]
-l <- dim(xl)[1] 
-n <- dim(xl)[2] - 1 
-
-OY<-seq(from = min(iris[, 3]), to = max(iris[, 3]), by = 0.1)
-OX<-seq(from = min(iris[, 4]), to = max(iris[, 4]), by = 0.1)
-
-for(i in OY) {
-  for(j in OX) {
-    point <- c(i, j)
-    weight <- matrix(NA, l, 2) #ìàòðèöà ðàññòîÿíèé è âåñîâ
-    for (p in 1:l) {
-      weight[p, 1] <- euclideanDistance(xl[p, 1:n], point) # ðàññòîÿíèÿ îò êëàññèôèöèðóåìîãî îáúåêòà u äî êàæäîãî i-ãî ñîñåäà
-      z <- weight[p, 1] / h # àðãóìåíò ôóíêöèè ÿäðà
-      cores <- c(core1(z), core2(z), core3(z), core4(z), core5(z)) #ôóíêöèè ÿäåð
+#ÐžÑ‚Ñ€Ð¸ÑÐ¾Ð²ÐºÐ° ÐºÐ°Ñ€Ñ‚Ñ‹ ÐºÐ»Ð°ÑÑÐ¸Ñ„Ð¸ÐºÐ°Ñ†Ð¸Ð¸
+drawPW = function(points, classes, colors, h) {
+  uniqueClasses = unique(classes)
+  names(colors) = uniqueClasses
+  
+  
+  plot(points, bg = colors[classes], pch = 21, asp = 1,main = "ÐšÐ°Ñ€Ñ‚Ð° ÐºÐ»Ð°ÑÑÐ¸Ñ„Ð¸ÐºÐ°Ñ†Ð¸Ð¸ PW. Ð“Ð°ÑƒÑÑÐ¾Ð²ÑÐºÐ¾Ðµ ÑÐ´Ñ€Ð¾. ", xlab = "Ð”Ð»Ð¸Ð½Ð° Ð»Ð¸ÑÑ‚Ð°", ylab = "Ð¨Ð¸Ñ€Ð¸Ð½Ð° Ð»Ð¸ÑÑ‚Ð°", col.lab = "blue") 
+  
+  
+  step = 0.1
+  ox = seq(1, 7, step)
+  oy = seq(0, 3, step)
+  
+  for (x in ox) {
+    for (y in oy) {
+      x = round(x, 1) 
+      y = round(y, 1) 
+      u = c(x, y)
       
-      weight[p, 2] <- cores[2] # ïîäñ÷¸ò âåñà äëÿ òðåóãîëüíîãî ÿäðà
+      
+      
+      distances = distances(points, u)
+      names(distances) = classes
+      classified = PW(distances, u, h)
+      
+      
+      points(u[1], u[2], col = colors[classified], pch = 21) #u
     }
-    
-classes <- data.frame(weight[ , 1], weight[ , 2], xl[ , 3]) # òàáëèöà äàííûõ íàçâàíèé ðàññòîÿíèé, ÿäåð è êëàññîâ 
-colnames(classes) <- c("Distances", "Weights", "Species")
-
-
-sumSetosa <- sum(classes[classes$Species == "setosa", 2])
-sumVersicolor <- sum(classes[classes$Species == "versicolor", 2])
-sumVirginica <- sum(classes[classes$Species == "virginica", 2])
-answer <- matrix(c(sumSetosa, sumVersicolor, sumVirginica), 
-                 nrow = 1, ncol = 3, byrow = T, list(c(1), c('setosa', 'versicolor', 'virginica')))
-points(point[1], point[2],  pch = 21, bg = "white", col = colors[which.max(answer)])
   }
+  
+  
 }
 
-for (i in 1:l) {
-  points(iris[i, 3], iris[i, 4],  pch = 21, bg = colors[iris$Species[i]], col = colors[iris$Species[i]])
+#LOO
+LOOPW = function(points, classes, hValues) {
+  n = dim(points)[1]
+  loo = rep(0, length(hValues))
+  
+  for (i in 1:n) {
+    u = points[i,]
+    sample = points[-i,]
+    distances = distances(sample, u)
+    names(distances) = classes[-i]
+    
+    for (j in 1:length(hValues)) {
+      h = hValues[j]
+      classified = PW(distances, u, h)
+      loo[j] = loo[j] + (classified != classes[i])
+    }
+  }
+  
+  loo = loo / n
 }
 
-legend("bottomright", c("h=0.5"))
+#ÐžÑ‚Ñ€Ð¸ÑÐ¾Ð²ÐºÐ° LOO
+drawLOOPW = function(points, classes, hValues) {
+  loo = LOOPW(points, classes, hValues)
+  
+  x = hValues
+  y = loo
+  
+  plot(x, y, type = "l", main = "LOO Ð´Ð»Ñ PW. Ð“Ð°ÑƒÑÑÐ¾Ð²ÑÐºÐ¾Ðµ ÑÐ´Ñ€Ð¾.", xlab = "h", ylab = "LOO", col.lab = "blue")
+  
+  h = hValues[which.min(loo)]
+  h.loo = round(loo[which.min(loo)], 4)
+  
+  points(h, h.loo, pch = 19, col = "blue")
+  label = paste("h = ", h, "\n", "LOO = ", h.loo, sep = "")
+  text(h, h.loo, labels = label, pos = 3, col = "blue", family = "mono", font = 2)
+  
+  return(h)
+}
+
+#Ñ‚ÐµÑÑ‚Ð¸Ñ€ÑƒÐµÐ¼ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñƒ
+
+petals = iris[, 3:4]
+petalNames = iris[, 5]
+
+par(mfrow = c(1, 2), xpd = T)
+drawPW(petals, petalNames, colors = c("red", "green3", "blue"), h = h)
+h = drawLOOPW(petals, petalNames, hValues = seq(0.1, 2, 0.005))
 
