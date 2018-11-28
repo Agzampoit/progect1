@@ -13,7 +13,9 @@
 | Метод         | Параметры       | Точность      |
 |:------------- |:---------------:| -------------:|
 | knn           | k=6             |     0.0333    |
-| kwnn          | k=6,q=0.5       |     0.0466    |
+| kwnn          | k=6,q=0.5       |     0.0466    |  
+| PW.Prymoyg    | h=0.3           |     0.04      |
+| PW.Treyg      | h=0.3           |     0.04      |  
 
 
 
@@ -217,6 +219,11 @@ mc.PW = function(distances, u, h) {
 **2**.  
 ![pw treyg](https://user-images.githubusercontent.com/43229815/49181026-5949f400-f367-11e8-9ea7-a1e174a8edb1.png)  
 **3**.  
+![pw kvar](https://user-images.githubusercontent.com/43229815/49182335-11c56700-f36b-11e8-8120-cc4e62c8b664.png)  
+**4**.  
+![pw epanch](https://user-images.githubusercontent.com/43229815/49182767-340bb480-f36c-11e8-87ed-a45b74fa17a8.png)  
+**5**.  
+
 
 
 
