@@ -1,122 +1,66 @@
-#Евклидово расстояние
-dist = function(p1, p2) sqrt(sum((p1 - p2) ^ 2)) 
-#Расстояние от всех points до точки u
-distances = function(points, u) apply(points, 1, dist, u)
-
-
-
-#Ядра
-kernel.pr = function(r){
-  return ((0.5 * (abs(r) <= 1) )) #функция прямоугольного ядра
-}
-kernel.tr = function(r){
-  return ((1 - abs(r)) * (abs(r) <= 1)) #функция для треугольного ядра
-}
-kernel.kv = function(r){
-  return ((15 / 16) * (1 - r ^ 2) ^ 2 * (abs(r) <= 1)) #функция для квартического ядра
-}
-kernel.ep = function(r){
-  return ((3/4*(1-r^2)*(abs(r)<=1))) #функция для ядра Епанечникова
-}
-kernel.ga = function(r){
-  (((2*pi)^(-1/2)) * exp(-1/2*r^2)) #функция для Гауссовского ядра
+euclideanDistance <- function(u, v)
+{
+  return (sqrt(sum((u - v)^2)))
 }
 
-
-PW.kernel = kernel.kv 
-
-#PW
-mc.PW = function(distances, u, h) {
-  weights = mc.PW.kernel(distances / h)
-  classes = unique(names(distances)) 
-  
-  weightsByClass = sapply(classes, mc.sumByClass, weights)
-  
-  if (max(weightsByClass) == 0) return("") 
-  
-  return(names(which.max(weightsByClass)))
+core1 = function(z){
+  return ((0.5 * (abs(z) <= 1) )) #функция прямоугольного ядра
+}
+core2 = function(z){
+  return ((1 - abs(z)) * (abs(z) <= 1)) #функция для треугольного ядра
+}
+core3 = function(z){
+  return ((15 / 16) * (1 - z ^ 2) ^ 2 * (abs(z) <= 1)) #функция для квартического ядра
+}
+core4 = function(z){
+  return ((3/4*(1-z^2)*(abs(z)<=1))) #функция для ядра Епанечникова
+}
+core5 = function(z){
+  (((2*pi)^(-1/2)) * exp(-1/2*z^2)) #функция для Гауссовского ядра
 }
 
-
-#Отрисовка карты классификации
-drawPW = function(points, classes, colors, h) {
-  uniqueClasses = unique(classes)
-  names(colors) = uniqueClasses
-  
-  
-  plot(points, bg = colors[classes], pch = 21, asp = 1,main = "Карта классификации PW. Гауссовское ядро. ", xlab = "Длина листа", ylab = "Ширина листа", col.lab = "blue") 
-  
-  
-  step = 0.1
-  ox = seq(1, 7, step)
-  oy = seq(0, 3, step)
-  
-  for (x in ox) {
-    for (y in oy) {
-      x = round(x, 1) 
-      y = round(y, 1) 
-      u = c(x, y)
+PW <- function(xl,point, h)
+{
+    weight <- matrix(NA, l, 2) #матрица расстояний и весов
+    for (p in 1:l) {
+      weight[p, 1] <- euclideanDistance(xl[p, 1:n], point) # расстояния от классифицируемого объекта u до каждого i-го соседа
+      z <- weight[p, 1] / h # аргумент функции ядра
+      cores <- c(core1(z), core2(z), core3(z), core4(z), core5(z)) #функции ядер
       
-      
-      
-      distances = distances(points, u)
-      names(distances) = classes
-      classified = PW(distances, u, h)
-      
-      
-      points(u[1], u[2], col = colors[classified], pch = 21) #u
+      weight[p, 2] <- cores[2] # подсчёт веса для треугольного ядра
     }
-  }
-  
-  
-}
-
-#LOO
-LOOPW = function(points, classes, hValues) {
-  n = dim(points)[1]
-  loo = rep(0, length(hValues))
-  
-  for (i in 1:n) {
-    u = points[i,]
-    sample = points[-i,]
-    distances = distances(sample, u)
-    names(distances) = classes[-i]
     
-    for (j in 1:length(hValues)) {
-      h = hValues[j]
-      classified = PW(distances, u, h)
-      loo[j] = loo[j] + (classified != classes[i])
+    classes <- data.frame(weight[ , 1], weight[ , 2], xl[ , 3]) # таблица данных названий расстояний, ядер и классов 
+    colnames(classes) <- c("Distances", "Weights", "Species")
+    
+    
+    w1 = c('setosa', 'versicolor', 'virginica')
+    w2 = c(0, 0, 0)
+    sumSetosa <- sum(classes[classes$Species == "setosa", 2])
+    sumVersicolor <- sum(classes[classes$Species == "versicolor", 2])
+    sumVirginica <- sum(classes[classes$Species == "virginica", 2])
+    answer <- matrix(c(sumSetosa, sumVersicolor, sumVirginica), 
+                     nrow = 1, ncol = 3, byrow = T, list(c(1), c('setosa', 'versicolor', 'virginica')))
+    if(answer[1,1]==0&&answer[1,2]==0&&answer[1,3]==0){
+      class='white'
     }
+    else{
+      class = colors[which.max(answer)]
+    }
+    return(class)
+} 
+
+map <- function(xl,h)
+{
+OY<-seq(from = min(iris[, 3]), to = max(iris[, 3]), by = 0.1)
+OX<-seq(from = min(iris[, 4]), to = max(iris[, 4]), by = 0.1)
+
+for(i in OY) {
+  for(j in OX) {
+    point <- c(i, j)
+    class <- PW(xl,point,h)
+    points(point[1],point[2], pch=21, col= colors[class], asp=1)
   }
-  
-  loo = loo / n
 }
-
-#Отрисовка LOO
-drawLOOPW = function(points, classes, hValues) {
-  loo = LOOPW(points, classes, hValues)
-  
-  x = hValues
-  y = loo
-  
-  plot(x, y, type = "l", main = "LOO для PW. Гауссовское ядро.", xlab = "h", ylab = "LOO", col.lab = "blue")
-  
-  h = hValues[which.min(loo)]
-  h.loo = round(loo[which.min(loo)], 4)
-  
-  points(h, h.loo, pch = 19, col = "blue")
-  label = paste("h = ", h, "\n", "LOO = ", h.loo, sep = "")
-  text(h, h.loo, labels = label, pos = 3, col = "blue", family = "mono", font = 2)
-  
-  return(h)
 }
-
-#тестируем программу
-
-petals = iris[, 3:4]
-petalNames = iris[, 5]
-
-par(mfrow = c(1, 2), xpd = T)
-drawPW(petals, petalNames, colors = c("red", "green3", "blue"), h = h)
-h = drawLOOPW(petals, petalNames, hValues = seq(0.1, 2, 0.005))
 
