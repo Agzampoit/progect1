@@ -33,9 +33,6 @@ PW <- function(xl,point, h)
     classes <- data.frame(weight[ , 1], weight[ , 2], xl[ , 3]) # таблица данных названий расстояний, ядер и классов 
     colnames(classes) <- c("Distances", "Weights", "Species")
     
-    
-    w1 = c('setosa', 'versicolor', 'virginica')
-    w2 = c(0, 0, 0)
     sumSetosa <- sum(classes[classes$Species == "setosa", 2])
     sumVersicolor <- sum(classes[classes$Species == "versicolor", 2])
     sumVirginica <- sum(classes[classes$Species == "virginica", 2])
