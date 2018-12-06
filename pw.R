@@ -3,7 +3,7 @@ euclideanDistance <- function(u, v)
   return (sqrt(sum((u - v)^2)))
 }
 
-RectangularКernel = function(z){
+RectangularKernel = function(z){
   return ((0.5 * (abs(z) <= 1) )) #функция прямоугольного ядра
 }
 TriangularKernel = function(z){
