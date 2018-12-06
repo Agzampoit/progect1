@@ -216,7 +216,7 @@ PW <- function(xl,point, h)
       weight[p, 2] <- cores[2] # подсчёт веса для треугольного ядра
     }
     
-    classes <- data.frame(weight[ , 1], weight[ , 2], xl[ , 3]) # таблица данных названий расстояний, ядер и классов 
+     
     colnames(classes) <- c("Distances", "Weights", "Species")
     
     
