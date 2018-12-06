@@ -219,9 +219,7 @@ PW <- function(xl,point, h)
      
     colnames(classes) <- c("Distances", "Weights", "Species")
     
-    
-    w1 = c('setosa', 'versicolor', 'virginica')
-    w2 = c(0, 0, 0)
+   
     sumSetosa <- sum(classes[classes$Species == "setosa", 2])
     sumVersicolor <- sum(classes[classes$Species == "versicolor", 2])
     sumVirginica <- sum(classes[classes$Species == "virginica", 2])
