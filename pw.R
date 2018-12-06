@@ -3,7 +3,7 @@ euclideanDistance <- function(u, v)
   return (sqrt(sum((u - v)^2)))
 }
 
-cRectangularКernel = function(z){
+RectangularКernel = function(z){
   return ((0.5 * (abs(z) <= 1) )) #функция прямоугольного ядра
 }
 TriangularKernel = function(z){
@@ -12,7 +12,7 @@ TriangularKernel = function(z){
 QuarticKernel = function(z){
   return ((15 / 16) * (1 - z ^ 2) ^ 2 * (abs(z) <= 1)) #функция для квартического ядра
 }
-EpaneghnikovKernel = function(z){
+EpanechnikovKernel = function(z){
   return ((3/4*(1-z^2)*(abs(z)<=1))) #функция для ядра Епанечникова
 }
 GaussianKernel = function(z){
