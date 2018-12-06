@@ -195,7 +195,7 @@ TriangularKernel = function(z){
 QuarticKernel = function(z){
   return ((15 / 16) * (1 - z ^ 2) ^ 2 * (abs(z) <= 1)) #функция для квартического ядра
 }
-EpaneghnikovKernel = function(z){
+EpanechnikovKernel = function(z){
   return ((3/4*(1-z^2)*(abs(z)<=1))) #функция для ядра Епанечникова
 }
 GaussianKernel = function(z){
@@ -211,7 +211,7 @@ PW <- function(xl,point, h)
     for (p in 1:l) {
       weight[p, 1] <- euclideanDistance(xl[p, 1:n], point) # расстояния от классифицируемого объекта u до каждого i-го соседа
       z <- weight[p, 1] / h # аргумент функции ядра
-      cores <- c(RectangularКernel(z), TriangularKernel(z), QuarticKernel(z), EpaneghnikovKernel(z), GaussianKernel(z)) #функции ядер
+      cores <- c(RectangularКernel(z), TriangularKernel(z), QuarticKernel(z), EpanechnikovKernel(z), GaussianKernel(z)) #функции ядер
       
       weight[p, 2] <- cores[2] # подсчёт веса для треугольного ядра
     }
