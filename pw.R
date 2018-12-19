@@ -1,65 +1,63 @@
-colors <- c("setosa" = "red", "versicolor" = "green3", "virginica" = "blue")
-plot(NULL, NULL, type = "l", xlim = c(min(iris[, 3]), max(iris[, 3])), ylim = c(min(iris[, 4]), max(iris[, 4])), main = "Ìåòîä Ïàðçåíîâñêîãî îêíà", xlab = 'Äëèíà ëèñòà', ylab = 'Øèðèíà ëèñòà')
-
-
 euclideanDistance <- function(u, v)
 {
   return (sqrt(sum((u - v)^2)))
 }
 
-core1 = function(z){
-  return ((0.5 * (abs(z) <= 1) )) #ôóíêöèÿ ïðÿìîóãîëüíîãî ÿäðà
+RectangularKernel = function(z){
+  return ((0.5 * (abs(z) <= 1) )) #Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð¿Ñ€ÑÐ¼Ð¾ÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð³Ð¾ ÑÐ´Ñ€Ð°
 }
-core2 = function(z){
-  return ((1 - abs(z)) * (abs(z) <= 1)) #ôóíêöèÿ äëÿ òðåóãîëüíîãî ÿäðà
+TriangularKernel = function(z){
+  return ((1 - abs(z)) * (abs(z) <= 1)) #Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð´Ð»Ñ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð³Ð¾ ÑÐ´Ñ€Ð°
 }
-core3 = function(z){
-  return ((15 / 16) * (1 - z ^ 2) ^ 2 * (abs(z) <= 1)) #ôóíêöèÿ äëÿ êâàðòè÷åñêîãî ÿäðà
+QuarticKernel = function(z){
+  return ((15 / 16) * (1 - z ^ 2) ^ 2 * (abs(z) <= 1)) #Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð´Ð»Ñ ÐºÐ²Ð°Ñ€Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾ ÑÐ´Ñ€Ð°
 }
-core4 = function(z){
-  return ((3/4*(1-z^2)*(abs(z)<=1))) #ôóíêöèÿ äëÿ ÿäðà Åïàíå÷íèêîâà
+EpanechnikovKernel = function(z){
+  return ((3/4*(1-z^2)*(abs(z)<=1))) #Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð´Ð»Ñ ÑÐ´Ñ€Ð° Ð•Ð¿Ð°Ð½ÐµÑ‡Ð½Ð¸ÐºÐ¾Ð²Ð°
 }
-core5 = function(z){
-  (((2*pi)^(-1/2)) * exp(-1/2*z^2)) #ôóíêöèÿ äëÿ Ãàóññîâñêîãî ÿäðà
+GaussianKernel = function(z){
+  (((2*pi)^(-1/2)) * exp(-1/2*z^2)) #Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð´Ð»Ñ Ð“Ð°ÑƒÑÑÐ¾Ð²ÑÐºÐ¾Ð³Ð¾ ÑÐ´Ñ€Ð°
 }
 
-h = 0.5 #äëÿ íà÷àëà
+PW <- function(xl,point, h)
+{
+    weight <- matrix(NA, l, 2) #Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ð° Ñ€Ð°ÑÑÑ‚Ð¾ÑÐ½Ð¸Ð¹ Ð¸ Ð²ÐµÑÐ¾Ð²
+    for (p in 1:l) {
+      weight[p, 1] <- euclideanDistance(xl[p, 1:n], point) # Ñ€Ð°ÑÑÑ‚Ð¾ÑÐ½Ð¸Ñ Ð¾Ñ‚ ÐºÐ»Ð°ÑÑÐ¸Ñ„Ð¸Ñ†Ð¸Ñ€ÑƒÐµÐ¼Ð¾Ð³Ð¾ Ð¾Ð±ÑŠÐµÐºÑ‚Ð° u Ð´Ð¾ ÐºÐ°Ð¶Ð´Ð¾Ð³Ð¾ i-Ð³Ð¾ ÑÐ¾ÑÐµÐ´Ð°
+      z <- weight[p, 1] / h # Ð°Ñ€Ð³ÑƒÐ¼ÐµÐ½Ñ‚ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ ÑÐ´Ñ€Ð°
+      cores <- c(RectangularÐšernel(z), TriangularKernel(z), QuarticKernel(z), EpanechnikovKernel(z), GaussianKernel(z)) #Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ ÑÐ´ÐµÑ€
+      
+      weight[p, 2] <- cores[2] # Ð¿Ð¾Ð´ÑÑ‡Ñ‘Ñ‚ Ð²ÐµÑÐ° Ð´Ð»Ñ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¾Ð³Ð¾ ÑÐ´Ñ€Ð°
+    }
+    
+    classes <- data.frame(weight[ , 1], weight[ , 2], xl[ , 3]) # Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ð¹ Ñ€Ð°ÑÑÑ‚Ð¾ÑÐ½Ð¸Ð¹, ÑÐ´ÐµÑ€ Ð¸ ÐºÐ»Ð°ÑÑÐ¾Ð² 
+    colnames(classes) <- c("Distances", "Weights", "Species")
+    
+    sumSetosa <- sum(classes[classes$Species == "setosa", 2])
+    sumVersicolor <- sum(classes[classes$Species == "versicolor", 2])
+    sumVirginica <- sum(classes[classes$Species == "virginica", 2])
+    answer <- matrix(c(sumSetosa, sumVersicolor, sumVirginica), 
+                     nrow = 1, ncol = 3, byrow = T, list(c(1), c('setosa', 'versicolor', 'virginica')))
+    if(answer[1,1]==0&&answer[1,2]==0&&answer[1,3]==0){
+      class='white'
+    }
+    else{
+      class = colors[which.max(answer)]
+    }
+    return(class)
+} 
 
-xl <- iris[, 3:5]
-l <- dim(xl)[1] 
-n <- dim(xl)[2] - 1 
-
+map <- function(xl,h)
+{
 OY<-seq(from = min(iris[, 3]), to = max(iris[, 3]), by = 0.1)
 OX<-seq(from = min(iris[, 4]), to = max(iris[, 4]), by = 0.1)
 
 for(i in OY) {
   for(j in OX) {
     point <- c(i, j)
-    weight <- matrix(NA, l, 2) #ìàòðèöà ðàññòîÿíèé è âåñîâ
-    for (p in 1:l) {
-      weight[p, 1] <- euclideanDistance(xl[p, 1:n], point) # ðàññòîÿíèÿ îò êëàññèôèöèðóåìîãî îáúåêòà u äî êàæäîãî i-ãî ñîñåäà
-      z <- weight[p, 1] / h # àðãóìåíò ôóíêöèè ÿäðà
-      cores <- c(core1(z), core2(z), core3(z), core4(z), core5(z)) #ôóíêöèè ÿäåð
-      
-      weight[p, 2] <- cores[2] # ïîäñ÷¸ò âåñà äëÿ òðåóãîëüíîãî ÿäðà
-    }
-    
-classes <- data.frame(weight[ , 1], weight[ , 2], xl[ , 3]) # òàáëèöà äàííûõ íàçâàíèé ðàññòîÿíèé, ÿäåð è êëàññîâ 
-colnames(classes) <- c("Distances", "Weights", "Species")
-
-
-sumSetosa <- sum(classes[classes$Species == "setosa", 2])
-sumVersicolor <- sum(classes[classes$Species == "versicolor", 2])
-sumVirginica <- sum(classes[classes$Species == "virginica", 2])
-answer <- matrix(c(sumSetosa, sumVersicolor, sumVirginica), 
-                 nrow = 1, ncol = 3, byrow = T, list(c(1), c('setosa', 'versicolor', 'virginica')))
-points(point[1], point[2],  pch = 21, bg = "white", col = colors[which.max(answer)])
+    class <- PW(xl,point,h)
+    points(point[1],point[2], pch=21, col= colors[class], asp=1)
   }
 }
-
-for (i in 1:l) {
-  points(iris[i, 3], iris[i, 4],  pch = 21, bg = colors[iris$Species[i]], col = colors[iris$Species[i]])
 }
-
-legend("bottomright", c("h=0.5"))
 
