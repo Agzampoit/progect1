@@ -398,7 +398,7 @@ inverseSigma <- solve(Sigma)
 alpha <- inverseSigma %*% t(mu1 - mu2)
 beta <- (mu1 %*% inverseSigma %*% t(mu1) - mu2 %*% inverseSigma %*% t(mu2)) / 2
 ```  
-Код алгоритма: [тут](https://github.com/sefayehalilova/progect1/blob/master/fisher.R)  
+Код алгоритма: [fisher](https://github.com/sefayehalilova/progect1/blob/master/fisher.R)  
 
 Результат работы алгоритма выглядит следующим образом:  
 ![fisher1](https://user-images.githubusercontent.com/43229815/50239683-e9fa7980-03d3-11e9-9951-8c73bc48a399.png)  
