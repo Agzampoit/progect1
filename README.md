@@ -288,32 +288,21 @@ py(x) = py1(ξ1)⋅⋅⋅pyn(ξn), где pyj(ξj) плотность распр
 Для математического ожидания 𝜇, то есть находим центр нормального распределения элементов класса:  
 
 ```diff  
-estimateMu <- function(objects)
-{
-  rows <- dim(objects)[1]
-  cols <- dim(objects)[2]
-  mu <- matrix(NA, 1, cols)
+
   for (col in 1:cols){
    mu[1, col] = mean(objects[,col])
   }
-  return(mu)
-}
+
 
 ```  
 Для восстановления ковариационной матрицы 𝛴:  
 
 ```diff  
-estimateCovarianceMatrix <- function(objects, mu)
-{
-  rows <- dim(objects)[1]
-  cols <- dim(objects)[2]
-  sigma <- matrix(0, cols, cols)
+
   for (i in 1:rows){
-    sigma <- sigma + (t(objects[i,] - mu) %*%
-                        (objects[i,] - mu)) / (rows - 1)
+    sigma <- sigma + (t(objects[i,] - mu) %*% (objects[i,] - mu)) / (rows - 1)
   }
-  return (sigma)
-}
+
 
 ```     
 
@@ -346,21 +335,17 @@ Sigma2 <- matrix(c(10, 0, 0, 15), 2, 2)
 ![](https://camo.githubusercontent.com/a8d4c8e1eabfffb775b2e63c6e113c9e8e0f54ed/687474703a2f2f6c617465782e636f6465636f67732e636f6d2f6769662e6c617465783f25354373756d2535452537422d2537442673706163653b3d2673706163653b25354366726163253742312537442537426c2d2537435925374325374425354373756d5f253742693d312537442535456c2673706163653b28785f692673706163653b2d2673706163653b2535436d752535452537422d2537445f253742795f692537442928785f692673706163653b2d2673706163653b2535436d752535452537422d2537445f253742795f692537442925354554)  
 Восстановление ковариационных матриц в коде алгоритма:  
 ```diff  
-estimateFisherCovarianceMatrix = function(points1, mu1, points2, mu2) {
-    rows1 = dim(points1)[1]
-    rows2 = dim(points2)[1]
-    rows = rows1 + rows2
-    cols = dim(points1)[2]
-    sigma = matrix(0, cols, cols)
 
-    for (i in 1:rows1)
+
+    for (i in 1:rows1){
         sigma = sigma + (t(points1[i,] - mu1) %*% (points1[i,] - mu1))
+	}
 
-    for (i in 1:rows2)
+    for (i in 1:rows2){
         sigma = sigma + (t(points2[i,] - mu2) %*% (points2[i,] - mu2))
+	}
 
-    return(sigma / (rows + 2))
-}
+
 ```  
 Разделяющая плоскость здается формулой:  
 ![](https://camo.githubusercontent.com/855779b58e3e1dcbdb989877d5fd3232da1d55f2/687474703a2f2f6c617465782e636f6465636f67732e636f6d2f7376672e6c617465783f253543616c70686125323078253545542532302b2532302535436265746125323025334425323030),   
