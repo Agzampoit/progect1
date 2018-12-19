@@ -347,21 +347,20 @@ Sigma2 <- matrix(c(10, 0, 0, 15), 2, 2)
 ![](https://camo.githubusercontent.com/a8d4c8e1eabfffb775b2e63c6e113c9e8e0f54ed/687474703a2f2f6c617465782e636f6465636f67732e636f6d2f6769662e6c617465783f25354373756d2535452537422d2537442673706163653b3d2673706163653b25354366726163253742312537442537426c2d2537435925374325374425354373756d5f253742693d312537442535456c2673706163653b28785f692673706163653b2d2673706163653b2535436d752535452537422d2537445f253742795f692537442928785f692673706163653b2d2673706163653b2535436d752535452537422d2537445f253742795f692537442925354554)  
 Восстановление ковариационных матриц в коде алгоритма:  
 ```diff  
-estimateFisherCovarianceMatrix <- function(objects1, objects2, mu1, mu2){
-  rows1 <- dim(objects1)[1]
-  rows2 <- dim(objects2)[1]
-  rows <- rows1 + rows2
-  cols <- dim(objects1)[2]
-  sigma <- matrix(0, cols, cols)
-  for (i in 1:rows1)
-  {
-    sigma <- sigma + (t(objects1[i,] - mu1) %*% (objects1[i,] - mu1)) / (rows + 2)
-  }
-  for (i in 1:rows2)
-  {
-    sigma <- sigma + (t(objects2[i,] - mu2) %*% (objects2[i,] - mu2)) / (rows + 2)
-  }
-  return (sigma)
+estimateFisherCovarianceMatrix = function(points1, mu1, points2, mu2) {
+    rows1 = dim(points1)[1]
+    rows2 = dim(points2)[1]
+    rows = rows1 + rows2
+    cols = dim(points1)[2]
+    sigma = matrix(0, cols, cols)
+
+    for (i in 1:rows1)
+        sigma = sigma + (t(points1[i,] - mu1) %*% (points1[i,] - mu1))
+
+    for (i in 1:rows2)
+        sigma = sigma + (t(points2[i,] - mu2) %*% (points2[i,] - mu2))
+
+    return(sigma / (rows + 2))
 }
 ```  
 Разделяющая плоскость здается формулой:  
