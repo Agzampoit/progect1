@@ -339,7 +339,8 @@ getPlugInDiskriminantCoeffs <- function(mu1, sigma1, mu2, sigma2){
   return (c("x^2" = a, "xy" = b, "y^2" = c, "x" = d, "y" = e, "1" = f))
 }
 
-```   
+```  
+Код алгоритма: ![plug-in](https://github.com/sefayehalilova/progect1/blob/master/plugin.R)
 Результаты работы подстановочного алгоритма:  
 1. Здесь по 250 элементов в каждом классе и ковариационные матрицы равны, поэтому разделяющая линия, как видим, вырождается в прямую(данный случай рассматривается в алгоритме ЛДФ(Линейный дискриминант Фишера), который мы рассмотрим позже), а эллипсоиды являются сферами:    
 ![plugin1](https://user-images.githubusercontent.com/43229815/50232435-fb3a8a80-03c1-11e9-9c66-aaf117847952.png)  
@@ -396,6 +397,7 @@ inverseSigma <- solve(Sigma)
 alpha <- inverseSigma %*% t(mu1 - mu2)
 beta <- (mu1 %*% inverseSigma %*% t(mu1) - mu2 %*% inverseSigma %*% t(mu2)) / 2
 ```  
+Код алгоритма: ![тут](https://github.com/sefayehalilova/progect1/blob/master/fisher.R)
 Результат работы алгоритма выглядит следующим образом:  
 ![fisher1](https://user-images.githubusercontent.com/43229815/50239683-e9fa7980-03d3-11e9-9951-8c73bc48a399.png)  
 Можно сравнить результаты работы алгоритмов с одинаковыми параметрами:
