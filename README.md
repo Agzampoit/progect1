@@ -317,7 +317,6 @@ estimateCovarianceMatrix <- function(objects, mu)
 
 ```     
 
-Код алгоритма: [plug-in](https://github.com/sefayehalilova/progect1/blob/master/plugin.R)  
 
 Результаты работы подстановочного алгоритма:  
 1. Здесь по 250 элементов в каждом классе и ковариационные матрицы равны, поэтому разделяющая линия, как видим, вырождается в прямую(данный случай рассматривается в алгоритме ЛДФ(Линейный дискриминант Фишера), который мы рассмотрим позже):    
@@ -374,7 +373,7 @@ inverseSigma <- solve(Sigma)
 alpha <- inverseSigma %*% t(mu1 - mu2)
 beta <- (mu1 %*% inverseSigma %*% t(mu1) - mu2 %*% inverseSigma %*% t(mu2)) / 2
 ```  
-Код алгоритма: [fisher](https://github.com/sefayehalilova/progect1/blob/master/fisher.R)  
+  
 
 Результат работы алгоритма выглядит следующим образом:  
 ![fisher1](https://user-images.githubusercontent.com/43229815/50239683-e9fa7980-03d3-11e9-9951-8c73bc48a399.png)  
@@ -389,7 +388,7 @@ Mu2 <- c(15, 0)
 ```  
 Количество элементов в каждом классе: 50.  
 1.Подстановочный алгоритм.  
-![plugin4](https://user-images.githubusercontent.com/43229815/50240218-3db99280-03d5-11e9-8cad-1bac8d115b18.png)  
+![pl](https://user-images.githubusercontent.com/43229815/50247232-64cd8f80-03e8-11e9-9c26-1206e4936ab5.png) 
 2.ЛДФ алгоритм.  
 ![fisher2](https://user-images.githubusercontent.com/43229815/50240256-575ada00-03d5-11e9-9fb2-ce3a15dc0fbb.png)  
 Видим, что превосходство ЛДФ очевидно. При чем, я заметила, что при малом количестве элементов в каждом классе ЛДФ превосходит подстановочный алгоритм. Чем меньше элементов, тем хуже работает подстановочный алгоритм.
