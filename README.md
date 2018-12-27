@@ -483,7 +483,7 @@ eta <- 1 / sqrt(sum(xi * xi))
 w <- w - eta * (wx - yi) * xi ##шаг градиентного спуска
 ```  
 Затем нужно оценить значение функционала *Q*:  
-![](https://latex.codecogs.com/gif.latex?Q%20%5C%2C%20%7B%3A%3D%7D%20%5C%2C%20%281%20%5C%2C%20-%20%5C%2C%20%5Clambda%29Q%20%5C%2C%20&plus;%20%5C%2C%20%5Clambda%5Cvarepsilon_i)  
+![](https://latex.codecogs.com/gif.latex?Q%20%5C%2C%20%7B%3A%3D%7D%20%5C%2C%20%281%20%5C%2C%20-%20%5C%2C%20%5Clambda%29Q%20%5C%2C%20&plus;%20%5C%2C%20%5Clambda%5Cvarepsilon_i) - критеий останова 
 
 ```diff
 Qprev <- Q
