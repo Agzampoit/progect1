@@ -554,7 +554,7 @@ w <- w + eta * xi * yi * sigmoidFunction(-wx * yi)
 **Теперь рассмотрим работу алгоритмов одновременно:**  
 
 
-![olllines](https://user-images.githubusercontent.com/43229815/51706007-433a7600-202e-11e9-84e4-db1d47d0afc4.png)
+![olllines](https://user-images.githubusercontent.com/43229815/51706505-b2fd3080-202f-11e9-9598-ffa155b7d667.png)
   
 
 
