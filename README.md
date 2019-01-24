@@ -537,6 +537,11 @@ return (1 / (1 + exp(-z)))
 ```diff
 w <- w + eta * xi * yi * sigmoidFunction(-wx * yi)
 ```  
+Сравнение всех трех линейных алгоритмов:  
+ADALINE-зеленая линия.  
+Персептрон Розенблатта - фиолетовая линия.  
+Логистическая регрессия - желтая линия.  
+![linear2](https://user-images.githubusercontent.com/43229815/51684305-cfcc4080-1ffc-11e9-8136-1bd463a913cd.png)
   
 
 
