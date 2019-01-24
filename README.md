@@ -551,8 +551,7 @@ w <- w + eta * xi * yi * sigmoidFunction(-wx * yi)
 ```  
 Работа алгоритма:  
 ![logistic](https://user-images.githubusercontent.com/43229815/51698444-44ae7300-201b-11e9-8fd3-f0fcf78aa8a7.png)  
-
-Теперь рассмотрим все линии:  
+**Теперь рассмотрим все линии:**  
 ![olllines](https://user-images.githubusercontent.com/43229815/51706007-433a7600-202e-11e9-84e4-db1d47d0afc4.png)
   
 
